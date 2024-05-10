@@ -1,20 +1,28 @@
 import { useState } from "react";
 
 export default function NewNoteForm ({addNote}) {
-    const [newNote, setNewNote] = useState('');
+    const [newNote, setNewNote] = useState({text: ''});
+
     function handleAddNewNote(evt) {
         evt.preventDefault();
         addNote(newNote);
-        setNewNote('')
+        setNewNote({text: ''})
     }
+
+    function handleChange(evt) {
+        const note = {...newNote, [evt.target.name]: evt.target.value};
+        setNewNote(note)
+    }
+
     return(
         <>
             <h1>New Note Form</h1>
             <form onSubmit={handleAddNewNote}>
                 <input
+                name="text"
                 type="text"
-                value={newNote}
-                onChange={(evt) => setNewNote(evt.target.value)}
+                value={newNote.text}
+                onChange={handleChange}
                 placeholder="New Note"
                 required
                 />
